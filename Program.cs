@@ -28,13 +28,11 @@ namespace GmaeRpgGG
                     switch (input)
                     {
                         case 1:
-                            Console.WriteLine("Нажата 1, загрузка\n");
-                            System.Threading.Thread.Sleep(150);
                             gg.ChooseHero();
                             break;
                         case 2:
-                            Console.WriteLine("Нажата 2, пока");
-                            System.Threading.Thread.Sleep(150);
+                            Console.WriteLine("\n\n\n\n\namogus");
+                            System.Threading.Thread.Sleep(1000);
                             Environment.Exit(0);
                             break;
                         default:

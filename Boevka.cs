@@ -8,12 +8,12 @@ namespace GmaeRpgGG
 {
     internal class Boevka
     {
+       
         int Enemy;
-        int Vibor;
-        Human[] Characters = {new Human ("Dan",10,2), new Berserk("Guts", 6, 3),
-        new URMOM("Saturn", 300, 0)};
+        int Hero;
         public void ChooseHero()
         {
+            
             Console.WriteLine("Выберите героя");
             Console.WriteLine("1.Человек");
             Console.WriteLine("2.Берсерк");
@@ -27,17 +27,17 @@ namespace GmaeRpgGG
                 {
                     case 1:
                         Console.WriteLine("Выбран человек" + " Dan\n");
-                        Vibor = 0;
+                        Hero = 0;
                         ChooseEnemy();
                         break;
                     case 2:
                         Console.WriteLine("Выбран берсерк" + " Guts\n");
-                        Vibor = 1;
+                        Hero = 1;
                         ChooseEnemy();
                         break;
                     case 3:
                         Console.WriteLine("Выбран URMOM" + " Saturn\n");
-                        Vibor = 2;
+                        Hero = 2;
                         ChooseEnemy();
                         break;
                     default:
@@ -54,6 +54,7 @@ namespace GmaeRpgGG
 
         public void ChooseEnemy()
         {
+            Human[] Characters = { new Human("Dan", 10, 2), new Berserk("Guts", 6, 3), new URMOM("Saturn", 300, 0) };
             Console.WriteLine("Выберите врага");
             Console.WriteLine("1.Человек");
             Console.WriteLine("2.Берсерк");
@@ -87,7 +88,7 @@ namespace GmaeRpgGG
                         {
                             Random rnd = new Random();
                             Enemy = rnd.Next(0, Characters.Length);
-                        } while (Enemy == Vibor);
+                        } while (Enemy == Hero);
                         Start();
                         break;
                     default:
@@ -104,10 +105,14 @@ namespace GmaeRpgGG
 
         public void Start()
         {
+            Human[] Characters = { new Human("Dan", 10, 2), new Berserk("Guts", 6, 3), new URMOM("Saturn", 300, 0) };
             Console.WriteLine("Q-Аттака Героя \nE-Аттака Монстра \nF-Бафф героя на 10 урона\n");
-            Characters[Vibor].GetInfo();
+            Characters[Hero].GetInfo();
+            Console.WriteLine();
             Characters[Enemy].GetInfo();
-            while (Characters[Vibor].GetHp() > 0 || Characters[Enemy].GetHp() > 0)
+
+            bool alive = true;
+            while (alive)
             {
                 var InsertKey = Console.ReadKey().Key;
                 Console.WriteLine("\n");
@@ -115,20 +120,26 @@ namespace GmaeRpgGG
                 switch (InsertKey)
                 {
                     case ConsoleKey.Q:
-                        Characters[Vibor].Attack(Characters[Enemy]);
+                        Characters[Hero].Attack(Characters[Enemy]);
                         break;
                     case ConsoleKey.E:
-                        Characters[Enemy].Attack(Characters[Vibor]);
+                        Characters[Enemy].Attack(Characters[Hero]);
                         break;
                     case ConsoleKey.F:
-                        Characters[Vibor].BAFF(10);
+                        Characters[Hero].BAFF(10);
                         break;
                     default:
                         Console.WriteLine("IDI NAHHUI");
                         break;
                 }
-                Characters[Vibor].GetInfo();
+                Characters[Hero].GetInfo();
+                Console.WriteLine();
                 Characters[Enemy].GetInfo();
+
+                if(Characters[Hero].GetHp() < 0 || Characters[Enemy].GetHp() < 0)
+                {
+                    alive = false;
+                }
             }
 
                 Console.WriteLine("\n КОНЕЦ ИГРЫ\n");
