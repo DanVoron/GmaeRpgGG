@@ -9,7 +9,7 @@ namespace GmaeRpgGG
 {
     public class Human
     {
-
+        
         protected int _hp;
         protected string _name;
         protected int _damage;
@@ -67,7 +67,7 @@ namespace GmaeRpgGG
         }
         public override void GetHit(int dmg)
         {
-            _hp -= dmg / 100; 
+            _hp -= dmg *2; 
         }
     }
 

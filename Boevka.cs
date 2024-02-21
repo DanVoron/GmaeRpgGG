@@ -9,11 +9,11 @@ namespace GmaeRpgGG
     internal class Boevka
     {
        
-        int Enemy;
-        int Hero;
+        public int Enemy;
+        public int Hero;
         public void ChooseHero()
         {
-            
+            Console.Clear();
             Console.WriteLine("Выберите героя");
             Console.WriteLine("1.Человек");
             Console.WriteLine("2.Берсерк");
@@ -54,6 +54,7 @@ namespace GmaeRpgGG
 
         public void ChooseEnemy()
         {
+            Console.Clear();
             Human[] Characters = { new Human("Dan", 10, 2), new Berserk("Guts", 6, 3), new URMOM("Saturn", 300, 0) };
             Console.WriteLine("Выберите врага");
             Console.WriteLine("1.Человек");
@@ -105,18 +106,19 @@ namespace GmaeRpgGG
 
         public void Start()
         {
+            Console.Clear();
             Human[] Characters = { new Human("Dan", 10, 2), new Berserk("Guts", 6, 3), new URMOM("Saturn", 300, 0) };
             Console.WriteLine("Q-Аттака Героя \nE-Аттака Монстра \nF-Бафф героя на 10 урона\n");
             Characters[Hero].GetInfo();
             Console.WriteLine();
             Characters[Enemy].GetInfo();
-
             bool alive = true;
             while (alive)
             {
+                
                 var InsertKey = Console.ReadKey().Key;
                 Console.WriteLine("\n");
-
+                Console.Clear();
                 switch (InsertKey)
                 {
                     case ConsoleKey.Q:
@@ -136,7 +138,7 @@ namespace GmaeRpgGG
                 Console.WriteLine();
                 Characters[Enemy].GetInfo();
 
-                if(Characters[Hero].GetHp() < 0 || Characters[Enemy].GetHp() < 0)
+                if (Characters[Hero].GetHp() < 0 || Characters[Enemy].GetHp() < 0)
                 {
                     alive = false;
                 }
@@ -145,6 +147,55 @@ namespace GmaeRpgGG
                 Console.WriteLine("\n КОНЕЦ ИГРЫ\n");
                 System.Threading.Thread.Sleep(2000);
                
+        }
+
+        public void StartStory(int progress)
+        {
+            StoryMode gey = new StoryMode();
+            Console.Clear();
+            Human[] Characters = { new Human("Dan", 10, 2), new Berserk("Guts", 6, 3), new URMOM("Saturn", 300, 0) };
+            Console.WriteLine("Q-Аттака Героя \nE-Аттака Монстра \nF-Бафф героя на 10 урона\n");
+            Characters[Hero].GetInfo();
+            Console.WriteLine();
+            Characters[Enemy].GetInfo();
+            bool alive = true;
+            while (alive)
+            {
+
+                var InsertKey = Console.ReadKey().Key;
+                Console.WriteLine("\n");
+                Console.Clear();
+                switch (InsertKey)
+                {
+                    case ConsoleKey.Q:
+                        Characters[Hero].Attack(Characters[Enemy]);
+                        break;
+                    case ConsoleKey.E:
+                        Characters[Enemy].Attack(Characters[Hero]);
+                        break;
+                    case ConsoleKey.F:
+                        Characters[Hero].BAFF(10);
+                        break;
+                    default:
+                        Console.WriteLine("IDI NAHHUI");
+                        break;
+                }
+                Characters[Hero].GetInfo();
+                Console.WriteLine();
+                Characters[Enemy].GetInfo();
+
+                if (Characters[Hero].GetHp() < 0 || Characters[Enemy].GetHp() < 0)
+                {
+                    alive = false;
+                    gey.StoryStart(progress);
+                }
+            }
+            if (Characters[Hero].GetHp() < 0)
+            {
+                Console.WriteLine("GameOver");
+            }
+
+
         }
     }
 }
